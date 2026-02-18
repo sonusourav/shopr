@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Grocery List</string>
+    <string name="app_title">Grocery List</string>
+    <string name="add_items_subtitle">Add items to your shopping list</string>
+
+    <!-- Add New Item card -->
+    <string name="add_new_item">Add New Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="enter_grocery_item_hint">Enter grocery item…</string>
+    <string name="category">Category</string>
+    <string name="add_item">Add Item</string>
+
+    <!-- Delete dialog -->
+    <string name="delete_item_title">Delete item?</string>
+    <string name="delete_item_message">Remove \"%1$s\" from your list?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Filter & sort -->
+    <string name="filter_all">All</string>
+    <string name="sort_chip_label">Sort: %1$s</string>
+    <string name="sort_default">Default</string>
+    <string name="sort_name_asc">Name A–Z</string>
+    <string name="sort_name_desc">Name Z–A</string>
+    <string name="sort_category">By category</string>
+    <string name="sort_status">By status</string>
+
+    <!-- Empty state -->
+    <string name="empty_list_title">Your grocery list is empty</string>
+    <string name="empty_list_subtitle">Add items above to get started</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_edit">Edit</string>
+    <string name="cd_delete">Delete</string>
+
+    <!-- Edit card -->
+    <string name="item_name_label">Item name</string>
+    <string name="save">Save</string>
+
+    <!-- Categories -->
+    <string name="category_milk">Milk</string>
+    <string name="category_vegetables">Vegetables</string>
+    <string name="category_fruits">Fruits</string>
+    <string name="category_breads">Breads</string>
+    <string name="category_meats">Meats</string>
+
+    <!-- Errors (used by ViewModel via constants) -->
+    <string name="error_add_item">Failed to add item</string>
+    <string name="error_update_item">Failed to update item</string>
+</resources>
