@@ -9,15 +9,19 @@
     <string name="enter_grocery_item_hint">Enter grocery item…</string>
     <string name="category">Category</string>
     <string name="add_item">Add Item</string>
+    <string name="update_item">Update</string>
 
     <!-- Delete dialog -->
     <string name="delete_item_title">Delete item?</string>
-    <string name="delete_item_message">Remove \"%1$s\" from your list?</string>
+    <string name="delete_item_message">Remove \"%1$s\" from your grocery?</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
 
     <!-- Filter & sort -->
     <string name="filter_all">All</string>
+    <string name="filter_completed">Completed</string>
+    <string name="filter_pending">Pending</string>
+    <string name="filter_all_categories">All categories</string>
     <string name="sort_chip_label">Sort: %1$s</string>
     <string name="sort_default">Default</string>
     <string name="sort_name_asc">Name A–Z</string>
@@ -32,6 +36,7 @@
     <!-- Content descriptions -->
     <string name="cd_edit">Edit</string>
     <string name="cd_delete">Delete</string>
+    <string name="cd_mark_completed">Mark as completed</string>
 
     <!-- Edit card -->
     <string name="item_name_label">Item name</string>
@@ -43,6 +48,11 @@
     <string name="category_fruits">Fruits</string>
     <string name="category_breads">Breads</string>
     <string name="category_meats">Meats</string>
+
+    <!-- Toasts -->
+    <string name="toast_item_added">Item added</string>
+    <string name="toast_item_deleted">Item removed</string>
+    <string name="toast_item_marked_purchased">Marked as purchased</string>
 
     <!-- Errors (used by ViewModel via constants) -->
     <string name="error_add_item">Failed to add item</string>

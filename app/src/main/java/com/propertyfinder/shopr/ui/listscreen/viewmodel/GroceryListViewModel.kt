@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.propertyfinder.shopr.data.model.GroceryCategory
 import com.propertyfinder.shopr.data.model.GroceryItem
 import com.propertyfinder.shopr.data.GroceryRepository
+import com.propertyfinder.shopr.R
 import com.propertyfinder.shopr.ui.listscreen.GroceryListError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +40,8 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
                 _uiState.update { it.copy(selectedCategory = intent.category) }
             is GroceryListIntent.SetFilterCategory ->
                 _uiState.update { it.copy(filterCategory = intent.category) }
+            is GroceryListIntent.SetFilterStatus ->
+                _uiState.update { it.copy(filterStatus = intent.status) }
             is GroceryListIntent.SetSortOrder ->
                 _uiState.update { it.copy(sortOrder = intent.order) }
             GroceryListIntent.AddItem -> addItem()
@@ -48,26 +51,25 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
                 _uiState.update {
                     it.copy(
                         itemBeingEdited = intent.item,
-                        editName = intent.item.name,
-                        editCategory = intent.item.category
+                        itemNameInput = intent.item.name,
+                        selectedCategory = intent.item.category,
+                        error = null
                     )
                 }
-            is GroceryListIntent.SetEditName ->
-                _uiState.update { it.copy(editName = intent.value) }
-            is GroceryListIntent.SetEditCategory ->
-                _uiState.update { it.copy(editCategory = intent.category) }
             GroceryListIntent.SaveEdit -> saveEdit()
             GroceryListIntent.CancelEdit ->
                 _uiState.update {
                     it.copy(
                         itemBeingEdited = null,
-                        editName = "",
-                        editCategory = GroceryCategory.MILK,
+                        itemNameInput = "",
+                        selectedCategory = GroceryCategory.MILK,
                         error = null
                     )
                 }
             GroceryListIntent.ClearError ->
                 _uiState.update { it.copy(error = null) }
+            GroceryListIntent.ClearToast ->
+                _uiState.update { it.copy(toastMessageResId = null) }
         }
     }
 
@@ -81,7 +83,8 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
                         it.copy(
                             itemNameInput = "",
                             selectedCategory = GroceryCategory.MILK,
-                            error = null
+                            error = null,
+                            toastMessageResId = R.string.toast_item_added
                         )
                     }
                 },
@@ -95,14 +98,19 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
     private fun toggleCompleted(item: GroceryItem) {
         viewModelScope.launch {
             repository.toggleCompleted(item)
+            _uiState.update { it.copy(toastMessageResId = R.string.toast_item_marked_purchased) }
         }
     }
 
     private fun deleteItem(item: GroceryItem) {
         viewModelScope.launch {
             repository.deleteItem(item)
-            if (_uiState.value.itemBeingEdited?.id == item.id) {
-                _uiState.update { it.copy(itemBeingEdited = null) }
+            _uiState.update { state ->
+                var next = state.copy(toastMessageResId = R.string.toast_item_deleted)
+                if (state.itemBeingEdited?.id == item.id) {
+                    next = next.copy(itemBeingEdited = null)
+                }
+                next
             }
         }
     }
@@ -112,15 +120,15 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
         val item = state.itemBeingEdited ?: return
         viewModelScope.launch {
             val result = repository.updateItem(
-                item.copy(name = state.editName.trim(), category = state.editCategory)
+                item.copy(name = state.itemNameInput.trim(), category = state.selectedCategory)
             )
             result.fold(
                 onSuccess = {
                     _uiState.update {
                         it.copy(
                             itemBeingEdited = null,
-                            editName = "",
-                            editCategory = GroceryCategory.MILK,
+                            itemNameInput = "",
+                            selectedCategory = GroceryCategory.MILK,
                             error = null
                         )
                     }

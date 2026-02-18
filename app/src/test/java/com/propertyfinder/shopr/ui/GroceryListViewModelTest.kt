@@ -48,11 +48,12 @@ class GroceryListViewModelTest {
     fun setFilterCategory_filtersItems() = runTest(testDispatcher) {
         repository.addItem("Milk", GroceryCategory.MILK)
         repository.addItem("Apple", GroceryCategory.FRUITS)
+        repository.addItem("Carrot", GroceryCategory.VEGETABLES)
         advanceUntilIdle()
-        viewModel.dispatch(GroceryListIntent.SetFilterCategory(GroceryCategory.MILK))
+        viewModel.dispatch(GroceryListIntent.SetFilterCategory(GroceryCategory.FRUITS))
         advanceUntilIdle()
         assertEquals(1, viewModel.uiState.value.items.size)
-        assertEquals("Milk", viewModel.uiState.value.items.first().name)
+        assertEquals("Apple", viewModel.uiState.value.items.first().name)
     }
 
     @Test

@@ -35,3 +35,6 @@ val FruitsChipText = Color(0xFFC62828)
 val BreadsChipText = Color(0xFFF57F17)
 val MeatsChipText = Color(0xFFAD1457)
 val SelectedChipBlue = Color(0xFF2196F3)
+
+// Completed item row: light green background (read-only, no actions)
+val CompletedItemBg = Color(0xFFE8F5E9)

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -37,6 +38,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.propertyfinder.shopr.R
@@ -65,7 +67,8 @@ fun AddNewItemCard(
     errorMessage: String?,
     onItemNameChange: (String) -> Unit,
     onCategorySelect: (GroceryCategory) -> Unit,
-    onAddClick: () -> Unit,
+    primaryButtonLabel: String,
+    onPrimaryClick: () -> Unit,
     onErrorDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -94,7 +97,8 @@ fun AddNewItemCard(
             Spacer(modifier = Modifier.height(16.dp))
             AddItemButton(
                 enabled = itemName.trim().length > 2,
-                onClick = onAddClick
+                buttonLabel = primaryButtonLabel,
+                onClick = onPrimaryClick
             )
         }
     }
@@ -198,19 +202,24 @@ private fun CategoryChip(
         isSelected -> Brush.verticalGradient(
             colors = listOf(SelectedChipBlue, SelectedChipBlue)
         ) to Color.White
+
         else -> when (category) {
             GroceryCategory.MILK -> Brush.verticalGradient(
                 colors = listOf(MilkChipBg, MilkChipBg.copy(alpha = 0.85f))
             ) to SelectedChipBlue
+
             GroceryCategory.VEGETABLES -> Brush.verticalGradient(
                 colors = listOf(VegetablesChipBg, VegetablesChipBg.copy(alpha = 0.85f))
             ) to VegetablesChipText
+
             GroceryCategory.FRUITS -> Brush.verticalGradient(
                 colors = listOf(FruitsChipBg, FruitsChipBg.copy(alpha = 0.85f))
             ) to FruitsChipText
+
             GroceryCategory.BREADS -> Brush.verticalGradient(
                 colors = listOf(BreadsChipBg, BreadsChipBg.copy(alpha = 0.85f))
             ) to BreadsChipText
+
             GroceryCategory.MEATS -> Brush.verticalGradient(
                 colors = listOf(MeatsChipBg, MeatsChipBg.copy(alpha = 0.85f))
             ) to MeatsChipText
@@ -218,7 +227,7 @@ private fun CategoryChip(
     }
     Card(
         modifier = Modifier
-            .size(width = 72.dp, height = 76.dp)
+            .size(width = 78.dp, height = 74.dp)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
@@ -236,7 +245,7 @@ private fun CategoryChip(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(vertical = 10.dp, horizontal = 4.dp),
+                    .padding(vertical = 10.dp, horizontal = 2.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -245,12 +254,13 @@ private fun CategoryChip(
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 24.sp
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = stringResource(categoryLabelRes(category)),
                     style = MaterialTheme.typography.labelMedium,
                     color = textColor,
-                    maxLines = 1
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }
@@ -274,6 +284,7 @@ private fun AddItemError(errorMessage: String?) {
 @Composable
 private fun AddItemButton(
     enabled: Boolean,
+    buttonLabel: String,
     onClick: () -> Unit
 ) {
     Button(
@@ -296,6 +307,6 @@ private fun AddItemButton(
             modifier = Modifier.size(20.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Text(stringResource(R.string.add_item))
+        Text(buttonLabel)
     }
 }

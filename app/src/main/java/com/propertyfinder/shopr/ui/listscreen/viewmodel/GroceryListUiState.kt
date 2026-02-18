@@ -13,14 +13,21 @@ import com.propertyfinder.shopr.ui.listscreen.filterAndSort
 data class GroceryListUiState(
     val rawItems: List<GroceryItem> = emptyList(),
     val filterCategory: GroceryCategory? = null,
+    val filterStatus: FilterStatus = FilterStatus.ALL,
     val sortOrder: SortOrder = SortOrder.DEFAULT,
     val itemNameInput: String = "",
     val selectedCategory: GroceryCategory = GroceryCategory.MILK,
     val error: GroceryListError? = null,
     val itemBeingEdited: GroceryItem? = null,
-    val editName: String = "",
-    val editCategory: GroceryCategory = GroceryCategory.MILK
+    /** One-time toast: set by ViewModel, consumed by UI (show then clear). */
+    val toastMessageResId: Int? = null
 ) {
-    /** Display list: raw items filtered by category and sorted. Derived from state only. */
-    val items: List<GroceryItem> get() = rawItems.filterAndSort(filterCategory, sortOrder)
+    /** Display list: by status, then by category (null = all), then sorted. */
+    val items: List<GroceryItem> get() = rawItems
+        .filter { when (filterStatus) {
+            FilterStatus.ALL -> true
+            FilterStatus.COMPLETED -> it.isCompleted
+            FilterStatus.PENDING -> !it.isCompleted
+        } }
+        .filterAndSort(filterCategory, sortOrder)
 }
