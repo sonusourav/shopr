@@ -1,4 +1,4 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.propertyfinder.shopr.R
-import com.propertyfinder.shopr.data.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryCategory
+import com.propertyfinder.shopr.ui.listscreen.SortOrder
+import com.propertyfinder.shopr.ui.res.categoryLabelRes
+import com.propertyfinder.shopr.ui.res.sortOrderLabelRes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

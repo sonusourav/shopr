@@ -1,7 +1,8 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.listscreen.viewmodel
 
-import com.propertyfinder.shopr.data.GroceryCategory
-import com.propertyfinder.shopr.data.GroceryItem
+import com.propertyfinder.shopr.data.model.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryItem
+import com.propertyfinder.shopr.ui.listscreen.SortOrder
 
 /**
  * MVI: User intents (actions) that the View can send to the ViewModel.

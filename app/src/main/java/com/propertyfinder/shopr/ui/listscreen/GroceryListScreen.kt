@@ -1,4 +1,4 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.listscreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +15,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.propertyfinder.shopr.data.GroceryItem
+import com.propertyfinder.shopr.data.model.GroceryItem
+import com.propertyfinder.shopr.ui.component.AddNewItemCard
+import com.propertyfinder.shopr.ui.component.DeleteConfirmDialog
+import com.propertyfinder.shopr.ui.component.EmptyState
+import com.propertyfinder.shopr.ui.component.FilterAndSortBar
+import com.propertyfinder.shopr.ui.component.GroceryItemsList
+import com.propertyfinder.shopr.ui.component.GroceryListHeader
+import com.propertyfinder.shopr.ui.listscreen.viewmodel.GroceryListIntent
+import com.propertyfinder.shopr.ui.listscreen.viewmodel.GroceryListViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

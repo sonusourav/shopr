@@ -1,7 +1,8 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.res
 
 import androidx.annotation.StringRes
 import com.propertyfinder.shopr.R
+import com.propertyfinder.shopr.ui.listscreen.SortOrder
 
 @StringRes
 fun sortOrderLabelRes(sortOrder: SortOrder): Int = when (sortOrder) {

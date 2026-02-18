@@ -1,4 +1,4 @@
-package com.propertyfinder.shopr.data
+package com.propertyfinder.shopr.data.model
 
 /**
  * Predefined categories for grocery items.

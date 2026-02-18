@@ -1,4 +1,4 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.listscreen
 
 import androidx.annotation.StringRes
 import com.propertyfinder.shopr.R

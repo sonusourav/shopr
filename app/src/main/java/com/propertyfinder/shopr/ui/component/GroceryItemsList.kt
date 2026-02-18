@@ -1,15 +1,14 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.propertyfinder.shopr.data.GroceryCategory
-import com.propertyfinder.shopr.data.GroceryItem
+import com.propertyfinder.shopr.data.model.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryItem
 
 @Composable
 fun GroceryItemsList(

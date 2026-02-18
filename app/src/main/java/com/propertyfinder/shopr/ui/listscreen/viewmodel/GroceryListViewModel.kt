@@ -1,10 +1,11 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.listscreen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.propertyfinder.shopr.data.GroceryCategory
-import com.propertyfinder.shopr.data.GroceryItem
+import com.propertyfinder.shopr.data.model.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryItem
 import com.propertyfinder.shopr.data.GroceryRepository
+import com.propertyfinder.shopr.ui.listscreen.GroceryListError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

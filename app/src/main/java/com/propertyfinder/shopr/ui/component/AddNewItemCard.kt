@@ -1,4 +1,4 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -36,10 +36,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.propertyfinder.shopr.R
-import com.propertyfinder.shopr.data.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryCategory
+import com.propertyfinder.shopr.ui.res.categoryEmoji
+import com.propertyfinder.shopr.ui.res.categoryLabelRes
 import com.propertyfinder.shopr.ui.theme.AddCardBackground
 import com.propertyfinder.shopr.ui.theme.BreadsChipBg
 import com.propertyfinder.shopr.ui.theme.BreadsChipText
@@ -114,7 +117,7 @@ private fun AddNewItemCardTitle() {
             text = stringResource(R.string.add_new_item),
             style = MaterialTheme.typography.titleMedium,
             color = Color.White,
-            fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(horizontal = 20.dp)
         )
     }

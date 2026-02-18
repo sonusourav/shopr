@@ -1,6 +1,7 @@
-package com.propertyfinder.shopr.data
+package com.propertyfinder.shopr.data.local
 
 import androidx.room.TypeConverter
+import com.propertyfinder.shopr.data.model.GroceryCategory
 
 class Converters {
 

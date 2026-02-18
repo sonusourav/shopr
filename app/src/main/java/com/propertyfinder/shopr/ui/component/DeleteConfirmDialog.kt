@@ -1,4 +1,4 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.component
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.propertyfinder.shopr.R
-import com.propertyfinder.shopr.data.GroceryItem
+import com.propertyfinder.shopr.data.model.GroceryItem
 
 @Composable
 fun DeleteConfirmDialog(

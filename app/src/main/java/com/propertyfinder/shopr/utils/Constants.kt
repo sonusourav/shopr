@@ -1,4 +1,4 @@
-package com.propertyfinder.shopr.data
+package com.propertyfinder.shopr.utils
 
 object DatabaseConstants {
     const val NAME = "shopr_database"

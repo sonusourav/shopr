@@ -1,10 +1,10 @@
 package com.propertyfinder.shopr.di
 
-import com.propertyfinder.shopr.data.AppDatabase
-import com.propertyfinder.shopr.data.DatabaseConstants
-import com.propertyfinder.shopr.data.GroceryDao
+import com.propertyfinder.shopr.data.local.AppDatabase
+import com.propertyfinder.shopr.utils.DatabaseConstants
+import com.propertyfinder.shopr.data.local.GroceryDao
 import com.propertyfinder.shopr.data.GroceryRepository
-import com.propertyfinder.shopr.ui.GroceryListViewModel
+import com.propertyfinder.shopr.ui.listscreen.viewmodel.GroceryListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

@@ -1,7 +1,10 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.listscreen.viewmodel
 
-import com.propertyfinder.shopr.data.GroceryCategory
-import com.propertyfinder.shopr.data.GroceryItem
+import com.propertyfinder.shopr.data.model.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryItem
+import com.propertyfinder.shopr.ui.listscreen.GroceryListError
+import com.propertyfinder.shopr.ui.listscreen.SortOrder
+import com.propertyfinder.shopr.ui.listscreen.filterAndSort
 
 /**
  * Single source of truth for the screen. [rawItems] is the list from the data layer;

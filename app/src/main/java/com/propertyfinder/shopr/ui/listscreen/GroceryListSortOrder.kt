@@ -1,7 +1,7 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.listscreen
 
-import com.propertyfinder.shopr.data.GroceryCategory
-import com.propertyfinder.shopr.data.GroceryItem
+import com.propertyfinder.shopr.data.model.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryItem
 
 enum class SortOrder(val label: String) {
 

@@ -1,8 +1,8 @@
-package com.propertyfinder.shopr.ui
+package com.propertyfinder.shopr.ui.res
 
 import androidx.annotation.StringRes
 import com.propertyfinder.shopr.R
-import com.propertyfinder.shopr.data.GroceryCategory
+import com.propertyfinder.shopr.data.model.GroceryCategory
 
 @StringRes
 fun categoryLabelRes(category: GroceryCategory): Int = when (category) {
