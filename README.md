@@ -1,4 +1,4 @@
-# Grocery List (Shopr)
+# Shopr
 
 A simple Android shopping list application that lets you manage grocery items by category, mark them complete, edit, delete, and persist data between launches.
 
@@ -9,6 +9,21 @@ A simple Android shopping list application that lets you manage grocery items by
 - **Manage items**: Mark as purchased (checkbox), delete (with confirmation), edit name and category.
 - **Filter & sort**: Filter by category; sort by default (newest first), name (A–Z / Z–A), category, or completion status.
 - **Persistence**: Data is stored locally with Room and survives app restarts.
+
+## How to: Edit, mark completed, delete
+
+- **Edit an item**
+  1. Long-press the item row (only for items not yet marked completed).
+  2. The “Add New Item” card at the top switches to edit mode and shows the item’s name and category.
+  3. Change the name and/or category, then tap **Update**. A toast confirms the update (e.g. “Oat Milk updated”).
+
+- **Mark as completed (purchased)**
+  1. Tap the **check** (✓) icon on the item row.
+  2. The item is marked as purchased (row style changes; check icon is hidden). A toast shows (e.g. “Milk marked as purchased”).
+
+- **Delete an item**
+  1. Tap the **delete** (trash) icon on the item row.
+  2. In the confirmation dialog, tap **Delete** to remove the item (or **Cancel** to keep it). A toast confirms removal (e.g. “Bread removed”).
 
 ## Tech Stack
 
@@ -43,7 +58,6 @@ A simple Android shopping list application that lets you manage grocery items by
 - **Debug APK**: `./gradlew assembleDebug`  
   Output: `app/build/outputs/apk/debug/app-debug.apk`
 - **Release**: `./gradlew assembleRelease`  
-  (Configure signing in `app/build.gradle.kts` for release builds.)
 
 ## Tests
 
@@ -61,6 +75,3 @@ A simple Android shopping list application that lets you manage grocery items by
   - **ui/theme/**: Theme, colors, typography
   - `MainActivity.kt`, `ShoprApplication.kt` (Koin started in `Application`)
 
-## License
-
-This project is for assignment/portfolio use.

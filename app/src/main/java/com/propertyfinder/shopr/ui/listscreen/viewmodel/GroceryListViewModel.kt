@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.propertyfinder.shopr.data.model.GroceryCategory
 import com.propertyfinder.shopr.data.model.GroceryItem
 import com.propertyfinder.shopr.data.GroceryRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class GroceryListViewModel(private val repository: GroceryRepository) : ViewModel() {
+class GroceryListViewModel(
+    private val repository: GroceryRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GroceryListUiState())
 
@@ -25,7 +29,7 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
     val sideEffects: SharedFlow<GroceryListSideEffect> = _sideEffects.asSharedFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             repository.allItems.collect { items ->
                 _uiState.update { it.copy(rawItems = items) }
             }
@@ -68,7 +72,7 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
     }
 
     private fun addItem() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             val state = _uiState.value
             val result = repository.addItem(state.itemNameInput, state.selectedCategory)
             val name = state.itemNameInput.trim().ifEmpty { "Item" }
@@ -90,14 +94,14 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
     }
 
     private fun toggleCompleted(item: GroceryItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             repository.toggleCompleted(item)
             _sideEffects.tryEmit(GroceryListSideEffect.ItemMarkedPurchasedToast(item.name))
         }
     }
 
     private fun deleteItem(item: GroceryItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             repository.deleteItem(item)
             _uiState.update { state ->
                 var next = state
@@ -113,7 +117,7 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
     private fun saveEdit() {
         val state = _uiState.value
         val item = state.itemBeingEdited ?: return
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             val result = repository.updateItem(
                 item.copy(name = state.itemNameInput.trim(), category = state.selectedCategory)
             )
