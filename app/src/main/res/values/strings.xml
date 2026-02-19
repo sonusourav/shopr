@@ -53,6 +53,7 @@
     <string name="toast_item_added">%1$s added</string>
     <string name="toast_item_deleted">%1$s removed</string>
     <string name="toast_item_marked_purchased">%1$s marked as purchased</string>
+    <string name="toast_item_updated">Updated to %1$s</string>
 
     <!-- Errors (%1$s = item name) -->
     <string name="error_add_item">Failed to add \"%1$s\"</string>

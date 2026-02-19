@@ -55,6 +55,8 @@ fun GroceryListScreen(
                     context.showToast(R.string.error_add_item, effect.name)
                 is GroceryListSideEffect.UpdateItemFailedToast ->
                     context.showToast(R.string.error_update_item, effect.name)
+                is GroceryListSideEffect.ItemUpdatedToast ->
+                    context.showToast(R.string.toast_item_updated, effect.name)
             }
         }
     }

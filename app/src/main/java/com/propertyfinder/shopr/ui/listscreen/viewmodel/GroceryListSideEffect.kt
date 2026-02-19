@@ -6,4 +6,5 @@ sealed class GroceryListSideEffect {
     data class ItemMarkedPurchasedToast(val name: String) : GroceryListSideEffect()
     data class AddItemFailedToast(val name: String) : GroceryListSideEffect()
     data class UpdateItemFailedToast(val name: String) : GroceryListSideEffect()
+    data class ItemUpdatedToast(val name: String) : GroceryListSideEffect()
 }

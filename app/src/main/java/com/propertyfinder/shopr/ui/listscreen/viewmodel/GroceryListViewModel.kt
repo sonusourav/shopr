@@ -117,15 +117,17 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
             val result = repository.updateItem(
                 item.copy(name = state.itemNameInput.trim(), category = state.selectedCategory)
             )
+            val updatedName = state.itemNameInput.trim()
             result.fold(
                 onSuccess = {
                     _uiState.update {
                         it.copy(
                             itemBeingEdited = null,
                             itemNameInput = "",
-                            selectedCategory = GroceryCategory.MILK,
+                            selectedCategory = GroceryCategory.MILK
                         )
                     }
+                    _sideEffects.tryEmit(GroceryListSideEffect.ItemUpdatedToast(updatedName))
                 },
                 onFailure = {
                     _sideEffects.tryEmit(GroceryListSideEffect.UpdateItemFailedToast(item.name))
