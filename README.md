@@ -69,6 +69,7 @@ A simple Android shopping list application that lets you manage grocery items by
 
 ## Build variants
 
+- **Pre-built APK**: A debug APK is available in the **`apk`** folder for direct install.
 - **Debug APK**: `./gradlew assembleDebug`  
   Output: `app/build/outputs/apk/debug/app-debug.apk`
 - **Release**: `./gradlew assembleRelease`  
