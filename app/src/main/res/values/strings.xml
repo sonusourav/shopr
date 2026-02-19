@@ -49,12 +49,12 @@
     <string name="category_breads">Breads</string>
     <string name="category_meats">Meats</string>
 
-    <!-- Toasts -->
-    <string name="toast_item_added">Item added</string>
-    <string name="toast_item_deleted">Item removed</string>
-    <string name="toast_item_marked_purchased">Marked as purchased</string>
+    <!-- Toasts (%1$s = item name) -->
+    <string name="toast_item_added">%1$s added</string>
+    <string name="toast_item_deleted">%1$s removed</string>
+    <string name="toast_item_marked_purchased">%1$s marked as purchased</string>
 
-    <!-- Errors (used by ViewModel via constants) -->
-    <string name="error_add_item">Failed to add item</string>
-    <string name="error_update_item">Failed to update item</string>
+    <!-- Errors (%1$s = item name) -->
+    <string name="error_add_item">Failed to add \"%1$s\"</string>
+    <string name="error_update_item">Failed to update \"%1$s\"</string>
 </resources>

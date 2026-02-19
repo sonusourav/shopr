@@ -1,6 +1,5 @@
 package com.propertyfinder.shopr.ui.listscreen
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.propertyfinder.shopr.R
 import com.propertyfinder.shopr.data.model.GroceryItem
+import com.propertyfinder.shopr.utils.showToast
 import com.propertyfinder.shopr.ui.component.AddNewItemCard
 import com.propertyfinder.shopr.ui.component.DeleteConfirmDialog
 import com.propertyfinder.shopr.ui.component.EmptyState
@@ -28,8 +28,8 @@ import com.propertyfinder.shopr.ui.component.FilterAndSortBar
 import com.propertyfinder.shopr.ui.component.GroceryItemsList
 import com.propertyfinder.shopr.ui.component.GroceryListHeader
 import com.propertyfinder.shopr.ui.listscreen.viewmodel.GroceryListIntent
+import com.propertyfinder.shopr.ui.listscreen.viewmodel.GroceryListSideEffect
 import com.propertyfinder.shopr.ui.listscreen.viewmodel.GroceryListViewModel
-import com.propertyfinder.shopr.ui.listscreen.viewmodel.FilterStatus
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -42,10 +42,20 @@ fun GroceryListScreen(
     val listState = rememberLazyListState()
     val context = LocalContext.current
 
-    LaunchedEffect(uiState.toastMessageResId) {
-        uiState.toastMessageResId?.let { resId ->
-            Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
-            viewModel.dispatch(GroceryListIntent.ClearToast)
+    LaunchedEffect(Unit) {
+        viewModel.sideEffects.collect { effect ->
+            when (effect) {
+                is GroceryListSideEffect.ItemAddedToast ->
+                    context.showToast(R.string.toast_item_added, effect.name)
+                is GroceryListSideEffect.ItemRemovedToast ->
+                    context.showToast(R.string.toast_item_deleted, effect.name)
+                is GroceryListSideEffect.ItemMarkedPurchasedToast ->
+                    context.showToast(R.string.toast_item_marked_purchased, effect.name)
+                is GroceryListSideEffect.AddItemFailedToast ->
+                    context.showToast(R.string.error_add_item, effect.name)
+                is GroceryListSideEffect.UpdateItemFailedToast ->
+                    context.showToast(R.string.error_update_item, effect.name)
+            }
         }
     }
 
@@ -67,12 +77,10 @@ fun GroceryListScreen(
         AddNewItemCard(
             itemName = uiState.itemNameInput,
             selectedCategory = uiState.selectedCategory,
-            errorMessage = uiState.error?.let { stringResource(it.messageResId) },
             onItemNameChange = { viewModel.dispatch(GroceryListIntent.SetItemNameInput(it)) },
             onCategorySelect = { viewModel.dispatch(GroceryListIntent.SetSelectedCategory(it)) },
             primaryButtonLabel = if (uiState.itemBeingEdited != null) stringResource(R.string.update_item) else stringResource(R.string.add_item),
-            onPrimaryClick = if (uiState.itemBeingEdited != null) ({ viewModel.dispatch(GroceryListIntent.SaveEdit) }) else ({ viewModel.dispatch(GroceryListIntent.AddItem) }),
-            onErrorDismiss = { viewModel.dispatch(GroceryListIntent.ClearError) }
+            onPrimaryClick = if (uiState.itemBeingEdited != null) ({ viewModel.dispatch(GroceryListIntent.SaveEdit) }) else ({ viewModel.dispatch(GroceryListIntent.AddItem) })
         )
         Spacer(modifier = Modifier.height(8.dp))
         FilterAndSortBar(

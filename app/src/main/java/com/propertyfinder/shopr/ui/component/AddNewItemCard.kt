@@ -1,6 +1,5 @@
 package com.propertyfinder.shopr.ui.component
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -64,12 +62,10 @@ import com.propertyfinder.shopr.ui.theme.VegetablesChipText
 fun AddNewItemCard(
     itemName: String,
     selectedCategory: GroceryCategory,
-    errorMessage: String?,
     onItemNameChange: (String) -> Unit,
     onCategorySelect: (GroceryCategory) -> Unit,
     primaryButtonLabel: String,
     onPrimaryClick: () -> Unit,
-    onErrorDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -93,7 +89,6 @@ fun AddNewItemCard(
                 selectedCategory = selectedCategory,
                 onCategorySelect = onCategorySelect
             )
-            AddItemError(errorMessage = errorMessage)
             Spacer(modifier = Modifier.height(16.dp))
             AddItemButton(
                 enabled = itemName.trim().length > 2,
@@ -263,20 +258,6 @@ private fun CategoryChip(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun AddItemError(errorMessage: String?) {
-    AnimatedVisibility(visible = errorMessage != null) {
-        Column {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = errorMessage ?: "",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
         }
     }
 }

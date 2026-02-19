@@ -19,6 +19,4 @@ sealed class GroceryListIntent {
     data class StartEdit(val item: GroceryItem) : GroceryListIntent()
     object SaveEdit : GroceryListIntent()
     object CancelEdit : GroceryListIntent()
-    object ClearError : GroceryListIntent()
-    object ClearToast : GroceryListIntent()
 }

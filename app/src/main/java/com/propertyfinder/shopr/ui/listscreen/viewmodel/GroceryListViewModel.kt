@@ -5,27 +5,27 @@ import androidx.lifecycle.viewModelScope
 import com.propertyfinder.shopr.data.model.GroceryCategory
 import com.propertyfinder.shopr.data.model.GroceryItem
 import com.propertyfinder.shopr.data.GroceryRepository
-import com.propertyfinder.shopr.R
-import com.propertyfinder.shopr.ui.listscreen.GroceryListError
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/**
- * MVI: Single state flow updated only by (1) intents and (2) repository emissions.
- * No combine — the model is one source of truth; [GroceryListUiState.items] is derived there.
- */
 class GroceryListViewModel(private val repository: GroceryRepository) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GroceryListUiState())
 
-    /** Single state stream. Items are derived in [GroceryListUiState.items]. */
+    private val _sideEffects = MutableSharedFlow<GroceryListSideEffect>(extraBufferCapacity = 1)
+
     val uiState: StateFlow<GroceryListUiState> = _uiState.asStateFlow()
+    val sideEffects: SharedFlow<GroceryListSideEffect> = _sideEffects.asSharedFlow()
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.allItems.collect { items ->
                 _uiState.update { it.copy(rawItems = items) }
             }
@@ -35,7 +35,7 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
     fun dispatch(intent: GroceryListIntent) {
         when (intent) {
             is GroceryListIntent.SetItemNameInput ->
-                _uiState.update { it.copy(itemNameInput = intent.value, error = null) }
+                _uiState.update { it.copy(itemNameInput = intent.value) }
             is GroceryListIntent.SetSelectedCategory ->
                 _uiState.update { it.copy(selectedCategory = intent.category) }
             is GroceryListIntent.SetFilterCategory ->
@@ -52,8 +52,7 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
                     it.copy(
                         itemBeingEdited = intent.item,
                         itemNameInput = intent.item.name,
-                        selectedCategory = intent.item.category,
-                        error = null
+                        selectedCategory = intent.item.category
                     )
                 }
             GroceryListIntent.SaveEdit -> saveEdit()
@@ -62,63 +61,59 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
                     it.copy(
                         itemBeingEdited = null,
                         itemNameInput = "",
-                        selectedCategory = GroceryCategory.MILK,
-                        error = null
+                        selectedCategory = GroceryCategory.MILK
                     )
                 }
-            GroceryListIntent.ClearError ->
-                _uiState.update { it.copy(error = null) }
-            GroceryListIntent.ClearToast ->
-                _uiState.update { it.copy(toastMessageResId = null) }
         }
     }
 
     private fun addItem() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val state = _uiState.value
             val result = repository.addItem(state.itemNameInput, state.selectedCategory)
+            val name = state.itemNameInput.trim().ifEmpty { "Item" }
             result.fold(
                 onSuccess = {
                     _uiState.update {
                         it.copy(
                             itemNameInput = "",
                             selectedCategory = GroceryCategory.MILK,
-                            error = null,
-                            toastMessageResId = R.string.toast_item_added
                         )
                     }
+                    _sideEffects.tryEmit(GroceryListSideEffect.ItemAddedToast(name))
                 },
                 onFailure = {
-                    _uiState.update { it.copy(error = GroceryListError.ADD_ITEM_FAILED) }
+                    _sideEffects.tryEmit(GroceryListSideEffect.AddItemFailedToast(name))
                 }
             )
         }
     }
 
     private fun toggleCompleted(item: GroceryItem) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.toggleCompleted(item)
-            _uiState.update { it.copy(toastMessageResId = R.string.toast_item_marked_purchased) }
+            _sideEffects.tryEmit(GroceryListSideEffect.ItemMarkedPurchasedToast(item.name))
         }
     }
 
     private fun deleteItem(item: GroceryItem) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.deleteItem(item)
             _uiState.update { state ->
-                var next = state.copy(toastMessageResId = R.string.toast_item_deleted)
+                var next = state
                 if (state.itemBeingEdited?.id == item.id) {
                     next = next.copy(itemBeingEdited = null)
                 }
                 next
             }
+            _sideEffects.tryEmit(GroceryListSideEffect.ItemRemovedToast(item.name))
         }
     }
 
     private fun saveEdit() {
         val state = _uiState.value
         val item = state.itemBeingEdited ?: return
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = repository.updateItem(
                 item.copy(name = state.itemNameInput.trim(), category = state.selectedCategory)
             )
@@ -129,12 +124,11 @@ class GroceryListViewModel(private val repository: GroceryRepository) : ViewMode
                             itemBeingEdited = null,
                             itemNameInput = "",
                             selectedCategory = GroceryCategory.MILK,
-                            error = null
                         )
                     }
                 },
                 onFailure = {
-                    _uiState.update { it.copy(error = GroceryListError.UPDATE_ITEM_FAILED) }
+                    _sideEffects.tryEmit(GroceryListSideEffect.UpdateItemFailedToast(item.name))
                 }
             )
         }

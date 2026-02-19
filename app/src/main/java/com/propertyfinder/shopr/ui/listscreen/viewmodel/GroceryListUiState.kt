@@ -2,7 +2,6 @@ package com.propertyfinder.shopr.ui.listscreen.viewmodel
 
 import com.propertyfinder.shopr.data.model.GroceryCategory
 import com.propertyfinder.shopr.data.model.GroceryItem
-import com.propertyfinder.shopr.ui.listscreen.GroceryListError
 import com.propertyfinder.shopr.ui.listscreen.SortOrder
 import com.propertyfinder.shopr.ui.listscreen.filterAndSort
 
@@ -17,10 +16,7 @@ data class GroceryListUiState(
     val sortOrder: SortOrder = SortOrder.DEFAULT,
     val itemNameInput: String = "",
     val selectedCategory: GroceryCategory = GroceryCategory.MILK,
-    val error: GroceryListError? = null,
-    val itemBeingEdited: GroceryItem? = null,
-    /** One-time toast: set by ViewModel, consumed by UI (show then clear). */
-    val toastMessageResId: Int? = null
+    val itemBeingEdited: GroceryItem? = null
 ) {
     /** Display list: by status, then by category (null = all), then sorted. */
     val items: List<GroceryItem> get() = rawItems
