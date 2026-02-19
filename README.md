@@ -2,6 +2,20 @@
 
 A simple Android shopping list application that lets you manage grocery items by category, mark them complete, edit, delete, and persist data between launches.
 
+## Screenshots
+
+<img src="https://github.com/user-attachments/assets/b9032931-33a4-435d-bf82-6cc6c644d26f" width="100" height="200" />
+
+<img src="https://github.com/user-attachments/assets/fbf6731e-d5d0-4a32-8dec-fda889ec04bf" width="100" height="200" />
+
+<img src="https://github.com/user-attachments/assets/12eed6c0-fd4e-4c9f-9875-cd4ab41db0ca" width="100" height="200" />
+
+<img src="https://github.com/user-attachments/assets/c9816d89-6ee8-4f0e-b3e4-48780e7d1679" width="100" height="200" />
+
+<img src="https://github.com/user-attachments/assets/1f23ae6f-14c2-42ad-a390-dd7103bd6b78" width="100" height="200" />
+
+<img src="https://github.com/user-attachments/assets/dbb2529c-f733-4abe-8e4f-7bb8c22072ca" width="100" height="200" />
+
 ## Features
 
 - **Add items**: Enter a name, choose a category (Milk, Vegetables, Fruits, Breads, Meats), and add with one tap. Input clears after adding.
@@ -10,7 +24,7 @@ A simple Android shopping list application that lets you manage grocery items by
 - **Filter & sort**: Filter by category; sort by default (newest first), name (A–Z / Z–A), category, or completion status.
 - **Persistence**: Data is stored locally with Room and survives app restarts.
 
-## How to: Edit, mark completed, delete
+## How to: Edit, Mark Completed, Delete
 
 - **Edit an item**
   1. Long-press the item row (only for items not yet marked completed).
