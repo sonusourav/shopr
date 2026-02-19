@@ -9,9 +9,4 @@ enum class GroceryCategory(val displayName: String) {
     FRUITS("Fruits"),
     BREADS("Breads"),
     MEATS("Meats");
-
-    companion object {
-        fun fromString(value: String?): GroceryCategory? =
-            entries.find { it.name.equals(value, ignoreCase = true) }
-    }
 }

@@ -56,7 +56,6 @@ fun FilterAndSortBar(
     }
 }
 
-/** Category chips only (Milk, Vegetables, etc.). No "All categories" chip; when none selected, list shows all. */
 @Composable
 private fun CategoryChips(
     filterCategory: GroceryCategory?,

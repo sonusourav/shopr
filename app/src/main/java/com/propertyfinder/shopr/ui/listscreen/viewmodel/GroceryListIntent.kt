@@ -4,9 +4,6 @@ import com.propertyfinder.shopr.data.model.GroceryCategory
 import com.propertyfinder.shopr.data.model.GroceryItem
 import com.propertyfinder.shopr.ui.listscreen.SortOrder
 
-/**
- * MVI: User intents (actions) that the View can send to the ViewModel.
- */
 sealed class GroceryListIntent {
     data class SetItemNameInput(val value: String) : GroceryListIntent()
     data class SetSelectedCategory(val category: GroceryCategory) : GroceryListIntent()

@@ -5,10 +5,6 @@ import com.propertyfinder.shopr.data.model.GroceryItem
 import com.propertyfinder.shopr.ui.listscreen.SortOrder
 import com.propertyfinder.shopr.ui.listscreen.filterAndSort
 
-/**
- * Single source of truth for the screen. [rawItems] is the list from the data layer;
- * [items] is derived (filtered + sorted) for display.
- */
 data class GroceryListUiState(
     val rawItems: List<GroceryItem> = emptyList(),
     val filterCategory: GroceryCategory? = null,
@@ -18,7 +14,6 @@ data class GroceryListUiState(
     val selectedCategory: GroceryCategory = GroceryCategory.MILK,
     val itemBeingEdited: GroceryItem? = null
 ) {
-    /** Display list: by status, then by category (null = all), then sorted. */
     val items: List<GroceryItem> get() = rawItems
         .filter { when (filterStatus) {
             FilterStatus.ALL -> true
